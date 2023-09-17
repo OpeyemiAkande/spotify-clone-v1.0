@@ -1,5 +1,7 @@
 "use client";
 
+import useAuthModal from "@/hooks/useAuthModal";
+import { useUser } from "@/hooks/useUser";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { FaPlay } from "react-icons/fa";
@@ -12,13 +14,22 @@ interface ListItemProps {
 
 const ListItem: React.FC<ListItemProps> = ({ image, name, href }) => {
   const router = useRouter();
+  const authModal = useAuthModal();
+  const { user } = useUser();
 
   const onClick = () => {
     // Add authentication before push
+    if (!user) {
+      return authModal.onOpen();
+    }
+
     router.push(href);
   };
   return (
-    <button className="relative group flex items-center rounded-md gap-x-4 bg-neutral-100/10 hover:bg-neutral-100/20 transition pr-4">
+    <button
+      onClick={onClick}
+      className="relative group flex items-center rounded-md gap-x-4 bg-neutral-100/10 hover:bg-neutral-100/20 transition pr-4"
+    >
       <div className="relative min-h-[64px] min-w-[64px]">
         <Image className="object-cover" fill src={image} alt="image" />
       </div>
