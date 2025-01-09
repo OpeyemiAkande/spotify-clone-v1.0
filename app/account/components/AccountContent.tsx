@@ -1,17 +1,17 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import {useEffect, useState} from "react";
+import {useRouter} from "next/navigation";
 
-import { useUser } from "@/hooks/useUser";
+import {useUser} from "@/hooks/useUser";
 import Button from "@/components/Button";
 import useSubscribeModal from "@/hooks/useSubscribeModal";
-import { postData } from "@/libs/helpers";
+import {postData} from "@/libs/helpers";
 
 const AccountContent = () => {
   const router = useRouter();
   const subscribeModal = useSubscribeModal();
-  const { isLoading, subscription, user } = useUser();
+  const {isLoading, subscription, user} = useUser();
 
   const [loading, setLoading] = useState(false);
 
@@ -24,7 +24,7 @@ const AccountContent = () => {
   const redirectToCustomerPortal = async () => {
     setLoading(true);
     try {
-      const { url, error } = await postData({
+      const {url, error} = await postData({
         url: "/api/create-portal-link",
       });
       window.location.assign(url);

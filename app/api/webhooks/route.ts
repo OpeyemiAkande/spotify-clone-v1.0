@@ -1,8 +1,8 @@
 import Stripe from "stripe";
-import { NextResponse } from "next/server";
-import { headers } from "next/headers";
+import {NextResponse} from "next/server";
+import {headers} from "next/headers";
 
-import { stripe } from "@/libs/stripe";
+import {stripe} from "@/libs/stripe";
 import {
   upsertProductRecord,
   upsertPriceRecord,
@@ -33,7 +33,7 @@ export async function POST(request: Request) {
     event = stripe.webhooks.constructEvent(body, sig, webhookSecret);
   } catch (err: any) {
     console.log(`❌ Error message: ${err.message}`);
-    return new NextResponse(`Webhook Error: ${err.message}`, { status: 400 });
+    return new NextResponse(`Webhook Error: ${err.message}`, {status: 400});
   }
 
   if (relevantEvents.has(event.type)) {
@@ -75,10 +75,10 @@ export async function POST(request: Request) {
       console.log(error);
       return new NextResponse(
         'Webhook error: "Webhook handler failed. View logs."',
-        { status: 400 }
+        {status: 400}
       );
     }
   }
 
-  return NextResponse.json({ received: true }, { status: 200 });
+  return NextResponse.json({received: true}, {status: 200});
 }

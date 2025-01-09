@@ -1,12 +1,12 @@
 "use client";
 
 import useSound from "use-sound";
-import { useEffect, useState } from "react";
-import { BsPauseFill, BsPlayFill } from "react-icons/bs";
-import { HiSpeakerWave, HiSpeakerXMark } from "react-icons/hi2";
-import { AiFillStepBackward, AiFillStepForward } from "react-icons/ai";
+import {useEffect, useState} from "react";
+import {BsPauseFill, BsPlayFill} from "react-icons/bs";
+import {HiSpeakerWave, HiSpeakerXMark} from "react-icons/hi2";
+import {AiFillStepBackward, AiFillStepForward} from "react-icons/ai";
 
-import { Song } from "@/types";
+import {Song} from "@/types";
 import usePlayer from "@/hooks/usePlayer";
 
 import LikeButton from "./LikeButton";
@@ -18,7 +18,7 @@ interface PlayerContentProps {
   songUrl: string;
 }
 
-const PlayerContent: React.FC<PlayerContentProps> = ({ song, songUrl }) => {
+const PlayerContent: React.FC<PlayerContentProps> = ({song, songUrl}) => {
   const player = usePlayer();
   const [volume, setVolume] = useState(1);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -56,7 +56,7 @@ const PlayerContent: React.FC<PlayerContentProps> = ({ song, songUrl }) => {
     player.setId(previousSong);
   };
 
-  const [play, { pause, sound }] = useSound(songUrl, {
+  const [play, {pause, sound}] = useSound(songUrl, {
     volume: volume,
     onplay: () => setIsPlaying(true),
     onend: () => {

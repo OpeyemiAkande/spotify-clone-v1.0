@@ -1,22 +1,22 @@
-import { useRouter } from "next/navigation";
-import { toast } from "react-hot-toast";
-import { useSessionContext } from "@supabase/auth-helpers-react";
+import {useRouter} from "next/navigation";
+import {toast} from "react-hot-toast";
+import {useSessionContext} from "@supabase/auth-helpers-react";
 
-import { useUser } from "@/hooks/useUser";
+import {useUser} from "@/hooks/useUser";
 import useAuthModal from "@/hooks/useAuthModal";
-import { useEffect, useState } from "react";
-import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
+import {useEffect, useState} from "react";
+import {AiFillHeart, AiOutlineHeart} from "react-icons/ai";
 
 interface LikeButtonProps {
   songId: string;
 }
 
-const LikeButton: React.FC<LikeButtonProps> = ({ songId }) => {
+const LikeButton: React.FC<LikeButtonProps> = ({songId}) => {
   const router = useRouter();
-  const { supabaseClient } = useSessionContext();
+  const {supabaseClient} = useSessionContext();
 
   const authModal = useAuthModal();
-  const { user } = useUser();
+  const {user} = useUser();
 
   const [isLiked, setIsLiked] = useState<boolean>(false);
 
@@ -26,7 +26,7 @@ const LikeButton: React.FC<LikeButtonProps> = ({ songId }) => {
     }
 
     const fetchData = async () => {
-      const { data, error } = await supabaseClient
+      const {data, error} = await supabaseClient
         .from("liked_songs")
         .select("*")
         .eq("user_id", user.id)
@@ -49,7 +49,7 @@ const LikeButton: React.FC<LikeButtonProps> = ({ songId }) => {
     }
 
     if (isLiked) {
-      const { error } = await supabaseClient
+      const {error} = await supabaseClient
         .from("liked_songs")
         .delete()
         .eq("user_id", user.id)
@@ -61,7 +61,7 @@ const LikeButton: React.FC<LikeButtonProps> = ({ songId }) => {
         setIsLiked(false);
       }
     } else {
-      const { error } = await supabaseClient.from("liked_songs").insert({
+      const {error} = await supabaseClient.from("liked_songs").insert({
         song_id: songId,
         user_id: user.id,
       });

@@ -1,13 +1,13 @@
 "use client";
 
-import React, { useState } from "react";
-import { toast } from "react-hot-toast";
+import React, {useState} from "react";
+import {toast} from "react-hot-toast";
 
 import useSubscribeModal from "@/hooks/useSubscribeModal";
-import { useUser } from "@/hooks/useUser";
-import { postData } from "@/libs/helpers";
-import { getStripe } from "@/libs/stripeClient";
-import { Price, ProductWithPrice } from "@/types";
+import {useUser} from "@/hooks/useUser";
+import {postData} from "@/libs/helpers";
+import {getStripe} from "@/libs/stripeClient";
+import {Price, ProductWithPrice} from "@/types";
 
 import Modal from "./Modal";
 import Button from "./Button";
@@ -26,9 +26,9 @@ const formatPrice = (price: Price) => {
   return priceString;
 };
 
-const SubscribeModal: React.FC<SubscribeModalProps> = ({ products }) => {
+const SubscribeModal: React.FC<SubscribeModalProps> = ({products}) => {
   const subscribeModal = useSubscribeModal();
-  const { user, isLoading, subscription } = useUser();
+  const {user, isLoading, subscription} = useUser();
 
   const [priceIdLoading, setPriceIdLoading] = useState<string>();
 
@@ -52,13 +52,13 @@ const SubscribeModal: React.FC<SubscribeModalProps> = ({ products }) => {
     }
 
     try {
-      const { sessionId } = await postData({
+      const {sessionId} = await postData({
         url: "/api/create-checkout-session",
-        data: { price },
+        data: {price},
       });
 
       const stripe = await getStripe();
-      stripe?.redirectToCheckout({ sessionId });
+      stripe?.redirectToCheckout({sessionId});
     } catch (error) {
       return toast.error((error as Error)?.message);
     } finally {

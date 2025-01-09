@@ -1,21 +1,21 @@
 "use client";
-import { usePathname } from "next/navigation";
-import { useMemo } from "react";
-import { HiHome } from "react-icons/hi";
-import { BiSearch } from "react-icons/bi";
+import {usePathname} from "next/navigation";
+import {useMemo} from "react";
+import {HiHome} from "react-icons/hi";
+import {BiSearch} from "react-icons/bi";
 import SidebarItem from "./SidebarItem";
 import Library from "./Library";
 import Box from "./Box";
-import { Song } from "@/types";
+import {Song} from "@/types";
 import usePlayer from "@/hooks/usePlayer";
-import { twMerge } from "tailwind-merge";
+import {twMerge} from "tailwind-merge";
 
 interface SidebarProps {
   children: React.ReactNode;
   songs: Song[];
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ children, songs }) => {
+const Sidebar: React.FC<SidebarProps> = ({children, songs}) => {
   const pathname = usePathname();
   const player = usePlayer();
 

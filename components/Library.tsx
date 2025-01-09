@@ -1,11 +1,11 @@
 "use-client";
-import { TbPlaylist } from "react-icons/tb";
-import { AiOutlinePlus } from "react-icons/ai";
+import {TbPlaylist} from "react-icons/tb";
+import {AiOutlinePlus} from "react-icons/ai";
 
 import useAuthModal from "@/hooks/useAuthModal";
-import { useUser } from "@/hooks/useUser";
+import {useUser} from "@/hooks/useUser";
 import useUploadModal from "@/hooks/useUploadModal";
-import { Song } from "@/types";
+import {Song} from "@/types";
 import useOnPlay from "@/hooks/useOnPlay";
 import MediaItem from "@/components/MediaItem";
 import useSubscribeModal from "@/hooks/useSubscribeModal";
@@ -13,10 +13,10 @@ interface LibraryProps {
   songs: Song[];
 }
 
-const Library: React.FC<LibraryProps> = ({ songs }) => {
+const Library: React.FC<LibraryProps> = ({songs}) => {
   const authModal = useAuthModal();
   const uploadModal = useUploadModal();
-  const { user, subscription } = useUser();
+  const {user, subscription} = useUser();
   const subscribeModal = useSubscribeModal();
 
   const onPlay = useOnPlay(songs);
@@ -27,9 +27,9 @@ const Library: React.FC<LibraryProps> = ({ songs }) => {
     }
 
     // Todo: Check for subscription
-    if (!subscription) {
-      return subscribeModal.onOpen();
-    }
+    // if (!subscription) {
+    //   return subscribeModal.onOpen();
+    // }
 
     return uploadModal.onOpen();
   };

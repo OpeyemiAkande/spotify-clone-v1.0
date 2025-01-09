@@ -1,26 +1,26 @@
 "use client";
 
 import uniqid from "uniqid";
-import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { toast } from "react-hot-toast";
-import { useSupabaseClient } from "@supabase/auth-helpers-react";
+import {FieldValues, SubmitHandler, useForm} from "react-hook-form";
+import {useState} from "react";
+import {useRouter} from "next/navigation";
+import {toast} from "react-hot-toast";
+import {useSupabaseClient} from "@supabase/auth-helpers-react";
 
 import useUploadModal from "@/hooks/useUploadModal";
 import Modal from "./Modal";
 import Input from "./Input";
 import Button from "./Button";
-import { useUser } from "@/hooks/useUser";
+import {useUser} from "@/hooks/useUser";
 
 const UploadModal = () => {
   const [isLoading, setIsLoading] = useState(false);
   const uploadModal = useUploadModal();
-  const { user } = useUser();
+  const {user} = useUser();
   const supabaseClient = useSupabaseClient();
   const router = useRouter();
 
-  const { register, handleSubmit, reset } = useForm<FieldValues>({
+  const {register, handleSubmit, reset} = useForm<FieldValues>({
     defaultValues: {
       author: "",
       title: "",
@@ -52,7 +52,7 @@ const UploadModal = () => {
       const uniqueID = uniqid();
 
       // Upload song
-      const { data: songData, error: songError } = await supabaseClient.storage
+      const {data: songData, error: songError} = await supabaseClient.storage
         .from("songs")
         .upload(`song-${values.title}-${uniqueID}`, songFile, {
           cacheControl: "3600",
@@ -65,28 +65,25 @@ const UploadModal = () => {
       }
 
       // Upload Image
-      const { data: imageData, error: imageError } =
-        await supabaseClient.storage
-          .from("images")
-          .upload(`image-${values.title}-${uniqueID}`, imageFile, {
-            cacheControl: "3600",
-            upsert: false,
-          });
+      const {data: imageData, error: imageError} = await supabaseClient.storage
+        .from("images")
+        .upload(`image-${values.title}-${uniqueID}`, imageFile, {
+          cacheControl: "3600",
+          upsert: false,
+        });
 
       if (imageError) {
         setIsLoading(false);
         return toast.error("Failed image upload.");
       }
 
-      const { error: supabaseError } = await supabaseClient
-        .from("songs")
-        .insert({
-          user_id: user.id,
-          title: values.title,
-          author: values.author,
-          image_path: imageData.path,
-          song_path: songData.path,
-        });
+      const {error: supabaseError} = await supabaseClient.from("songs").insert({
+        user_id: user.id,
+        title: values.title,
+        author: values.author,
+        image_path: imageData.path,
+        song_path: songData.path,
+      });
 
       if (supabaseError) {
         setIsLoading(false);
@@ -115,13 +112,13 @@ const UploadModal = () => {
         <Input
           id="title"
           disabled={isLoading}
-          {...register("title", { required: true })}
+          {...register("title", {required: true})}
           placeholder="Song title"
         />
         <Input
           id="author"
           disabled={isLoading}
-          {...register("author", { required: true })}
+          {...register("author", {required: true})}
           placeholder="Song author"
         />
         <div>
@@ -132,7 +129,7 @@ const UploadModal = () => {
           type="file"
           disabled={isLoading}
           accept=".mp3"
-          {...register("song", { required: true })}
+          {...register("song", {required: true})}
         />
         <div>
           <div className="pb-1">Select an image</div>
@@ -142,7 +139,7 @@ const UploadModal = () => {
           type="file"
           disabled={isLoading}
           accept="image/*"
-          {...register("image", { required: true })}
+          {...register("image", {required: true})}
         />
         <Button disabled={isLoading} type="submit">
           Create

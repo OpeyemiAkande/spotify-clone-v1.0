@@ -7,7 +7,7 @@ import PlayerContent from "./PlayerContent";
 
 const Player = () => {
   const player = usePlayer();
-  const { song } = useGetSongById(player.activeId);
+  const {song} = useGetSongById(player.activeId);
 
   const songUrl = useLoadSongUrl(song!);
 

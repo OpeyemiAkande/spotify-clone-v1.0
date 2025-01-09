@@ -1,4 +1,4 @@
-import { Price } from "@/types";
+import {Price} from "@/types";
 
 export const getURL = () => {
   let url =
@@ -16,19 +16,19 @@ export const postData = async ({
   data,
 }: {
   url: string;
-  data?: { price: Price };
+  data?: {price: Price};
 }) => {
   console.log("posting,", url, data);
 
   const res: Response = await fetch(url, {
     method: "POST",
-    headers: new Headers({ "Content-Type": "application/json" }),
+    headers: new Headers({"Content-Type": "application/json"}),
     credentials: "same-origin",
     body: JSON.stringify(data),
   });
 
   if (!res.ok) {
-    console.log("Error in postData", { url, data, res });
+    console.log("Error in postData", {url, data, res});
 
     throw Error(res.statusText);
   }
